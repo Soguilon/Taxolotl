@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Taxolotl</title>
+
+  <!-- Favicon & Logo (place axolotl.ico and axolotl.png in same folder) -->
+  <link rel="icon" href="axolotl.ico" type="image/x-icon">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --mint:#D8F4C4;
+      --peach:#FFEFE6;
+      --soft:#FFF7F0;
+      --accent:#FFD7EC;
+      --shadow: 0 6px 18px rgba(14,18,28,0.08);
+      --glass: rgba(255,255,255,0.6);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(180deg, #FFFDF9 0%, #F6FFF8 100%);
+      display:flex;
+      min-height:100vh;
+      flex-direction:column;
+      -webkit-font-smoothing:antialiased;
+      color:#1f2e2b;
+    }
+
+    /* HEADER */
+    .top-header{
+      width:100%;
+      background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+      padding:10px 20px;
+      display:flex;
+      gap:12px;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+      position:sticky;
+      top:0;
+      z-index:1000;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;
+    }
+    .brand img{ width:42px; height:42px; object-fit:contain; border-radius:10px; }
+    .brand h2{
+      margin:0;
+      font-weight:700;
+      font-size:20px;
+      color:#1b422f;
+      letter-spacing:0.2px;
+    }
+    .about-btn{
+      background:linear-gradient(180deg,var(--mint), #CFF0C2);
+      padding:8px 14px;
+      border-radius:10px;
+      border:none;
+      font-weight:600;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+    }
+
+    /* LAYOUT */
+    .layout{
+      display:flex;
+      flex:1;
+      width:100%;
+    }
+
+    /* SIDEBAR */
+    .sidebar{
+      width:320px;
+      background: linear-gradient(180deg, var(--mint), rgba(201,244,196,0.8));
+      padding:24px;
+      height:calc(100vh - 78px);
+      border-radius:0 24px 24px 0;
+      box-shadow:4px 0 18px rgba(0,0,0,0.06);
+      position:relative;
+      overflow:auto;
+      transition:all .2s ease;
+    }
+
+    .sidebar h2{
+      font-size:18px;
+      font-weight:700;
+      margin-bottom:14px;
+      color:#123123;
+      letter-spacing:.2px;
+      display:flex;align-items:center;gap:8px;
+    }
+
+    .group-card{
+      background:white;
+      border-radius:14px;
+      padding:12px;
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .group-card:hover{ transform: translateY(-3px); }
+    .group-card.selected{
+      outline: 3px solid rgba(255,255,255,0.5);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.09);
+      transform: translateY(-1px);
+    }
+
+    .group-icon{
+      width:46px;height:46px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:20px;background:#FFF5D6;box-shadow:0 4px 8px rgba(0,0,0,0.06);
+    }
+
+    .group-name{ font-weight:600; color:#222; font-size:15px; }
+
+    .add-subject-btn{
+      position:absolute; left:22px; bottom:22px;
+      width:56px;height:56px;border-radius:50%;
+      background: white; display:flex; align-items:center; justify-content:center;
+      font-size:28px; box-shadow:0 8px 20px rgba(0,0,0,0.12); cursor:pointer;
+    }
+
+    /* MAIN */
+    .main{
+      flex:1; padding:28px 36px; overflow:auto;
+    }
+
+    .header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+
+    h1{ font-size:24px; margin:0; font-weight:700; display:flex; gap:10px; align-items:center; }
+    .subtext { color:#5f7a67; font-weight:500; }
+
+    .card-kawaii{
+      background: linear-gradient(180deg, var(--peach), #FFF6F1);
+      padding:18px;
+      border-radius:16px;
+      box-shadow: var(--shadow);
+      margin-top:18px;
+    }
+
+    input.form-control, textarea.form-control, select.form-select{
+      border-radius:12px;
+      border:2px solid rgba(0,0,0,0.04);
+      background:#fff;
+      padding:10px 12px;
+    }
+
+    .btn-kawaii{
+      background: linear-gradient(180deg,var(--accent), #FFDDEB);
+      border-radius:14px;
+      border:none;
+      padding:8px 12px;
+      font-weight:700;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+    }
+
+    .btn-kawaii-green{ background: linear-gradient(180deg,#C9F4C4,#AEEFAD); color:#1a3a2b; }
+    .btn-kawaii-red{ background: linear-gradient(180deg,#FFB8C6,#FF9FB0); color:#4a0a1a; }
+
+    .task-card{
+      background:white; border-radius:12px; padding:14px; box-shadow:0 6px 12px rgba(0,0,0,0.06);
+    }
+    .task-card.completed{
+      background:#D7F8CE; text-decoration:line-through; opacity:.95;
+    }
+
+    .xp-wrap{
+      display:flex; align-items:center; gap:12px;
+    }
+    .xp-bar{
+      height:10px; background:linear-gradient(90deg,#eee,#f7f7f7); border-radius:8px; flex:1; overflow:hidden;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    .xp-fill{ height:100%; width:0%; background: linear-gradient(90deg,#A4F3A4,#6ED37A); border-radius:8px; transition:width .4s ease; }
+
+    .level-badge{
+      background:linear-gradient(180deg,#fff,#f3fff3);
+      padding:8px 12px; border-radius:12px; font-weight:700; box-shadow:0 6px 14px rgba(0,0,0,0.06);
+    }
+
+    /* responsive */
+    @media(max-width:1100px){
+      .sidebar{ width:260px; }
+    }
+    @media(max-width:880px){
+      .sidebar{ display:none; }
+      .layout{ flex-direction:column; }
+      .main{ padding:18px; }
+      .brand h2{ font-size:18px; }
+      .top-header{ padding:10px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- TOP HEADER -->
+<div class="top-header">
+  <div class="brand">
+    <img src="axolotl.png" alt="Taxolotl logo">
+    <div>
+      <h2>Taxolotl</h2>
+      <div class="subtext">Task planner that makes productivity cute</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <button class="about-btn" id="openAboutBtn"><i class="fa fa-info-circle"></i> About</button>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <h2><i class="fa fa-folder-open"></i> Task Groups</h2>
+    <div id="subjectsList" class="mb-2"></div>
+    <div class="sidebar-hr"></div>
+    <small class="text-muted">Click a group to filter tasks</small>
+    <div class="add-subject-btn" id="openAddSubject" title="Add group"><i class="fa fa-plus"></i></div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <div class="header">
+      <div>
+        <h1><i class="fa fa-list-check"></i> Task Planner</h1>
+        <div class="text-muted">Organize tasks by group</div>
+      </div>
+
+      <div class="text-end" style="min-width:260px;">
+        <div class="xp-wrap">
+          <div class="level-badge">Level <span id="levelDisplay">1</span></div>
+          <div class="xp-bar" title="Experience">
+            <div id="xpFill" class="xp-fill" style="width:0%"></div>
+          </div>
+          <div style="min-width:70px;text-align:right;color:#2f5a44;font-weight:600;">
+            <small id="xpLabel">0 / 5 XP</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Task card -->
+    <div class="card-kawaii mt-4">
+      <div class="d-flex align-items-center justify-content-between">
+        <h5 class="mb-0"><i class="fa fa-circle-plus"></i> Add New Task</h5>
+        <div><strong id="currentSubjectLabel" style="color:#2b5b44">No group selected</strong></div>
+      </div>
+
+      <form id="taskForm" class="mt-3">
+        <div class="row g-2">
+          <div class="col-md-6">
+            <label class="form-label small">Title</label>
+            <input id="title" class="form-control" required />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label small">Priority</label>
+            <select id="priority" class="form-select">
+              <option>Low</option><option>Medium</option><option>High</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-2">
+          <label class="form-label small">Description</label>
+          <textarea id="description" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="mt-3 d-flex gap-2">
+          <button class="btn btn-kawaii w-100" type="submit"><i class="fa fa-circle-plus"></i> Add Task</button>
+          <button class="btn btn-outline-secondary" id="clearForm" type="button"><i class="fa fa-eraser"></i> Clear</button>
+        </div>
+      </form>
+    </div>
+
+    <h4 class="mt-4"><i class="fa fa-bolt"></i> Active Tasks</h4>
+    <div id="activeTasks" class="row g-3"></div>
+
+    <h4 class="mt-4"><i class="fa fa-clock-rotate-left"></i> Recent Tasks</h4>
+    <div id="recentTasks" class="row g-3"></div>
+  </div>
+
+</div>
+
+<!-- ABOUT MODAL (custom) -->
+<div class="modal fade" id="aboutModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:14px;">
+      <div class="modal-header">
+        <h5 class="modal-title">About Taxolotl</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <strong>Taxolotl</strong> is a cute and playful task planner made to help u manage lots of tasks with less stress.
+          Create groups, add tasks, and level up as u complete more stuff. The more tasks u finish, the higher ur level — and the more tasks it takes to level again. 🌱✨
+        </p>
+        <p class="mb-0"><small>Made with love — do things a lot, Taxolotl style.</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOM MODALS: add/edit subject, edit task, confirm -->
+<!-- Add/Edit Subject Modal -->
+<div class="modal fade" id="subjectModal" tabindex="-1">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content" style="border-radius:12px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="subjectModalTitle">Add Group</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-2">
+          <label class="form-label small">Group name</label>
+          <input id="subjectNameInput" class="form-control" />
+        </div>
+        <div>
+          <label class="form-label small">Emoji (optional)</label>
+          <input id="subjectEmojiInput" class="form-control" placeholder="e.g. 🧠, 📚, 💼" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-kawaii" id="saveSubjectBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Task Modal -->
+<div class="modal fade" id="editTaskModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="border-radius:12px;">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Task</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-2">
+          <label class="form-label small">Title</label>
+          <input id="editTaskTitle" class="form-control" />
+        </div>
+        <div class="mb-2">
+          <label class="form-label small">Description</label>
+          <textarea id="editTaskDesc" class="form-control" rows="2"></textarea>
+        </div>
+        <div>
+          <label class="form-label small">Priority</label>
+          <select id="editTaskPriority" class="form-select">
+            <option>Low</option><option>Medium</option><option>High</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-kawaii" id="saveTaskEditBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content" style="border-radius:12px;">
+      <div class="modal-body">
+        <p id="confirmMessage">Are you sure?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="confirmCancelBtn">Cancel</button>
+        <button class="btn btn-kawaii-red" id="confirmOkBtn">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOTSTRAP -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- FULL JS CODE -->
+<script>
+  const subjectsList = document.getElementById('subjectsList');
+  const openAddSubject = document.getElementById('openAddSubject');
+  const taskForm = document.getElementById('taskForm');
+  const activeTasks = document.getElementById('activeTasks');
+  const recentTasks = document.getElementById('recentTasks');
+  const currentSubjectLabel = document.getElementById('currentSubjectLabel');
+
+  // XP UI
+  const xpFill = document.getElementById('xpFill');
+  const xpLabel = document.getElementById('xpLabel');
+  const levelDisplay = document.getElementById('levelDisplay');
+
+  // modal instances
+  const aboutModal = new bootstrap.Modal(document.getElementById('aboutModal'));
+  const subjectModal = new bootstrap.Modal(document.getElementById('subjectModal'));
+  const editTaskModal = new bootstrap.Modal(document.getElementById('editTaskModal'));
+  const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+  // modal elements
+  const subjectModalTitle = document.getElementById('subjectModalTitle');
+  const subjectNameInput = document.getElementById('subjectNameInput');
+  const subjectEmojiInput = document.getElementById('subjectEmojiInput');
+  const saveSubjectBtn = document.getElementById('saveSubjectBtn');
+
+  const editTaskTitle = document.getElementById('editTaskTitle');
+  const editTaskDesc = document.getElementById('editTaskDesc');
+  const editTaskPriority = document.getElementById('editTaskPriority');
+  const saveTaskEditBtn = document.getElementById('saveTaskEditBtn');
+
+  const confirmMessage = document.getElementById('confirmMessage');
+  const confirmOkBtn = document.getElementById('confirmOkBtn');
+  const confirmCancelBtn = document.getElementById('confirmCancelBtn');
+
+  let subjects = JSON.parse(localStorage.getItem('subjects')) || [];
+  let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  // old streak is still saved for compatibility but we now use xp/level
+  let streak = parseInt(localStorage.getItem('streak')) || 0;
+  let selectedSubjectId = localStorage.getItem('selectedSubjectId') || null;
+
+  // XP / Level
+  let level = parseInt(localStorage.getItem('level')) || 1;
+  let xp = parseInt(localStorage.getItem('xp')) || 0;
+  // xpTarget: how many completed tasks required to reach next level (starts at 5)
+  let xpTarget = parseInt(localStorage.getItem('xpTarget')) || 5;
+
+  function uid(){ return Date.now() + Math.floor(Math.random()*999); }
+
+  function saveAll(){
+    localStorage.setItem('subjects', JSON.stringify(subjects));
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem('streak', streak);
+    localStorage.setItem('selectedSubjectId', selectedSubjectId);
+    // save xp data
+    localStorage.setItem('level', level);
+    localStorage.setItem('xp', xp);
+    localStorage.setItem('xpTarget', xpTarget);
+  }
+
+  function priorityValue(p){
+    if(p==='High') return 3;
+    if(p==='Medium') return 2;
+    return 1;
+  }
+
+  function renderSubjects(){
+    subjectsList.innerHTML = '';
+    if(subjects.length === 0){
+      subjectsList.innerHTML = `<div class="text-muted small">No groups yet. Click + to add one.</div>`;
+      currentSubjectLabel.textContent = 'No group selected';
+      selectedSubjectId = null;
+      saveAll();
+      renderTasks();
+      return;
+    }
+
+    subjects.forEach(s=>{
+      const div = document.createElement('div');
+      div.className = 'group-card' + (s.id===selectedSubjectId?' selected':'');
+      div.dataset.id = s.id;
+      div.innerHTML = `
+        <div class="group-icon">${s.emoji||'📁'}</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:space-between;">
+          <div class="group-name">${s.name}</div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button class="btn btn-sm btn-link text-muted subject-edit" data-id="${s.id}" title="Edit"><i class="fa fa-pen"></i></button>
+            <button class="btn btn-sm btn-link text-danger subject-delete" data-id="${s.id}" title="Delete"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+      `;
+      subjectsList.appendChild(div);
+    });
+
+    Array.from(document.getElementsByClassName('group-card')).forEach(el=>{
+      el.addEventListener('click', ()=>{
+        selectedSubjectId = el.dataset.id;
+        saveAll();
+        renderSubjects();
+        renderTasks();
+      });
+    });
+
+    Array.from(document.getElementsByClassName('subject-delete')).forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        // use custom confirm modal
+        showConfirm('Delete this group and its tasks?', ()=>{
+          subjects = subjects.filter(s=>s.id!==id);
+          tasks = tasks.filter(t=>t.subjectId!==id);
+          if(selectedSubjectId===id) selectedSubjectId = subjects[0]?.id || null;
+          saveAll();
+          renderSubjects();
+          renderTasks();
+        });
+      });
+    });
+
+    Array.from(document.getElementsByClassName('subject-edit')).forEach(btn=>{
+      btn.addEventListener('click',(e)=>{
+        e.stopPropagation();
+        const id = btn.dataset.id;
+        const s = subjects.find(x=>x.id===id);
+        if(!s) return;
+        // open subject modal in edit mode
+        subjectModalTitle.textContent = 'Edit Group';
+        subjectNameInput.value = s.name;
+        subjectEmojiInput.value = s.emoji || '';
+        saveSubjectBtn.onclick = ()=>{
+          const newName = subjectNameInput.value.trim();
+          const newEmoji = subjectEmojiInput.value.trim() || s.emoji || '📁';
+          if(!newName) return;
+          s.name = newName;
+          s.emoji = newEmoji;
+          saveAll();
+          subjectModal.hide();
+          renderSubjects();
+          renderTasks();
+        };
+        subjectModal.show();
+      });
+    });
+
+    currentSubjectLabel.textContent = subjects.find(s=>s.id===selectedSubjectId)?.emoji + ' ' + (subjects.find(s=>s.id===selectedSubjectId)?.name || '');
+  }
+
+  function renderTasks(){
+    activeTasks.innerHTML = '';
+    recentTasks.innerHTML = '';
+
+    if(!selectedSubjectId){
+      activeTasks.innerHTML = `<div class="text-muted small">Select or create a group to manage tasks.</div>`;
+      recentTasks.innerHTML = '';
+      updateXPUI();
+      return;
+    }
+
+    // Sort tasks by priority
+    const active = tasks.filter(t=>t.subjectId===selectedSubjectId && t.status==='Pending')
+                        .sort((a,b)=>priorityValue(b.priority)-priorityValue(a.priority));
+    const recent = tasks.filter(t=>t.subjectId===selectedSubjectId && t.status==='Completed')
+                        .sort((a,b)=>priorityValue(b.priority)-priorityValue(a.priority));
+
+    if(active.length===0) activeTasks.innerHTML = `<div class="text-muted small">No active tasks in this group.</div>`;
+    active.forEach(task=>{
+      const col = document.createElement('div');
+      col.className = 'col-md-6';
+      col.innerHTML = `
+        <div class="task-card">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="mb-1">${task.title}</h6>
+              <div class="text-muted small">${task.description||''}</div>
+            </div>
+            <div class="text-end">
+              <span class="badge ${task.priority==='High'?'badge-high':task.priority==='Medium'?'badge-medium':'badge-low'}">${task.priority}</span>
+            </div>
+          </div>
+          <div class="mt-3 d-flex gap-2">
+            <button class="btn btn-sm btn-kawaii-green" onclick="completeTask(${task.id})"><i class="fa fa-check"></i> Complete</button>
+            <button class="btn btn-sm btn-kawaii" onclick="editTask(${task.id})"><i class="fa fa-pen"></i> Edit</button>
+            <button class="btn btn-sm btn-kawaii-red" onclick="deleteTask(${task.id})"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+      `;
+      activeTasks.appendChild(col);
+    });
+
+    if(recent.length===0) recentTasks.innerHTML = `<div class="text-muted small">No completed tasks yet.</div>`;
+    recent.forEach(task=>{
+      const col = document.createElement('div');
+      col.className = 'col-md-6';
+      col.innerHTML = `
+        <div class="task-card completed">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6 class="mb-1">${task.title}</h6>
+              <div class="text-muted small">${task.description||''}</div>
+            </div>
+            <div class="text-end">
+              <span class="badge ${task.priority==='High'?'badge-high':task.priority==='Medium'?'badge-medium':'badge-low'}">${task.priority}</span>
+            </div>
+          </div>
+          <div class="mt-3 d-flex gap-2">
+            <button class="btn btn-sm btn-kawaii-green" onclick="reuseTask(${task.id})"><i class="fa fa-undo"></i> Reuse</button>
+            <button class="btn btn-sm btn-kawaii" onclick="editTask(${task.id})"><i class="fa fa-pen"></i> Edit</button>
+            <button class="btn btn-sm btn-kawaii-red" onclick="deleteTask(${task.id})"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+      `;
+      recentTasks.appendChild(col);
+    });
+
+    updateXPUI();
+  }
+
+  // TASK FUNCTIONS
+  taskForm.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    if(!selectedSubjectId){ showAlert('Select or create a group first.'); return; }
+    const newTask = {
+      id: uid(),
+      title: document.getElementById('title').value.trim() || '(No title)',
+      description: document.getElementById('description').value.trim(),
+      priority: document.getElementById('priority').value,
+      status: 'Pending',
+      subjectId: selectedSubjectId
+    };
+    tasks.push(newTask);
+    saveAll();
+    taskForm.reset();
+    renderTasks();
+  });
+
+  document.getElementById('clearForm').addEventListener('click', ()=>taskForm.reset());
+
+  // completeTask: marks completed, increments streak and also grants 1 XP per completed task
+  window.completeTask = function(id){
+    tasks = tasks.map(t=>{
+      if(t.id==id){ t.status='Completed'; streak++; xp++; }
+      return t;
+    });
+
+    // check for level up(s)
+    while(xp >= xpTarget){
+      xp = xp - xpTarget;
+      level++;
+      // increase next level requirement by +5 tasks (cumulative)
+      xpTarget += 5;
+    }
+
+    saveAll();
+    renderTasks();
+  }
+
+  window.reuseTask = function(id){
+    tasks = tasks.map(t=>{
+      if(t.id==id){ t.status='Pending'; }
+      return t;
+    });
+    saveAll();
+    renderTasks();
+  }
+
+  window.editTask = function(id){
+    const task = tasks.find(t=>t.id==id);
+    if(!task) return;
+    // open editTaskModal and populate fields
+    editTaskTitle.value = task.title;
+    editTaskDesc.value = task.description || '';
+    editTaskPriority.value = task.priority || 'Low';
+    saveTaskEditBtn.onclick = ()=>{
+      task.title = editTaskTitle.value.trim() || '(No title)';
+      task.description = editTaskDesc.value.trim();
+      const p = editTaskPriority.value;
+      if(p && ['High','Medium','Low'].includes(p)) task.priority = p;
+      saveAll();
+      editTaskModal.hide();
+      renderTasks();
+    };
+    editTaskModal.show();
+  }
+
+  window.deleteTask = function(id){
+    // custom confirm modal
+    showConfirm('Delete this task?', ()=>{
+      tasks = tasks.filter(t=>t.id!=id);
+      saveAll();
+      renderTasks();
+    });
+  }
+
+  // ADD SUBJECT (now uses modal)
+  openAddSubject.addEventListener('click', ()=>{
+    subjectModalTitle.textContent = 'Add Group';
+    subjectNameInput.value = '';
+    subjectEmojiInput.value = '';
+    saveSubjectBtn.onclick = ()=>{
+      const name = subjectNameInput.value.trim();
+      if(!name) return;
+      const emoji = subjectEmojiInput.value.trim() || '📁';
+      const newSubject = { id: uid().toString(), name, emoji };
+      subjects.push(newSubject);
+      selectedSubjectId = newSubject.id;
+      saveAll();
+      subjectModal.hide();
+      renderSubjects();
+      renderTasks();
+    };
+    subjectModal.show();
+  });
+
+  // small helper to show a quick alert (bootstrap toast-style using modal)
+  function showAlert(msg){
+    alert(msg); // quick fallback — can be replaced with a nicer toast
+  }
+
+  // Confirm helper
+  function showConfirm(message, onOk){
+    confirmMessage.textContent = message;
+    confirmOkBtn.onclick = ()=>{
+      onOk();
+      confirmModal.hide();
+    };
+    confirmCancelBtn.onclick = ()=> confirmModal.hide();
+    confirmModal.show();
+  }
+
+  // XP UI updater
+  function updateXPUI(){
+    levelDisplay.textContent = level;
+    // compute fraction as xp / xpTarget
+    const frac = Math.max(0, Math.min(1, xp / xpTarget));
+    xpFill.style.width = (frac*100) + '%';
+    xpLabel.textContent = `${xp} / ${xpTarget} XP`;
+  }
+
+  // Small function to initialize defaults if missing
+  function initDefaults(){
+    if(!Array.isArray(subjects)) subjects = [];
+    if(!Array.isArray(tasks)) tasks = [];
+    if(!level || level < 1) level = 1;
+    if(!xpTarget || xpTarget < 1) xpTarget = 5;
+    saveAll();
+  }
+
+  // Save edit task modal when user clicks Save (keeps handler consistent)
+  saveTaskEditBtn.addEventListener('click', ()=>{ /* handler set when opening modal */ });
+
+  // Open About
+  document.getElementById('openAboutBtn').addEventListener('click', ()=> aboutModal.show());
+
+  // INIT
+  initDefaults();
+  renderSubjects();
+  renderTasks();
+
+  // ensure xp UI reflects current data on load
+  updateXPUI();
+</script>
+
+<style>
+  .badge-high{background:#FF6B6B;color:#fff;padding:2px 6px;border-radius:6px;font-size:12px;}
+  .badge-medium{background:#FFD93D;color:#000;padding:2px 6px;border-radius:6px;font-size:12px;}
+  .badge-low{background:#6BCB77;color:#fff;padding:2px 6px;border-radius:6px;font-size:12px;}
+</style>
+
+</body>
+</html>
