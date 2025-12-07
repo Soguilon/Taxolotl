@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Taxolotl — Task Planner</title>
+  <title>Taxolotl</title>
 
   <!-- Favicon & Logo (place axolotl.ico and axolotl.png in same folder) -->
   <link rel="icon" href="axolotl.ico" type="image/x-icon">
@@ -18,6 +18,130 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+
+
+/* --------------------------
+   DARK MODE READABILITY FIX
+   Do NOT modify original styles
+   Only override when .dark-mode is active
+---------------------------*/
+
+.dark-mode body,
+.dark-mode {
+  background-color: #121212 !important;
+  color: #f5f5f5 !important;
+}
+
+/* Fix text colors to be readable */
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6,
+.dark-mode p,
+.dark-mode span,
+.dark-mode small,
+.dark-mode label,
+.dark-mode .text-muted {
+  color: #ffffff !important;
+}
+
+/* Cards, modals, panels */
+.dark-mode .task-card,
+.dark-mode .modal-content,
+.dark-mode .card,
+.dark-mode .subject-card,
+.dark-mode .task-form-area {
+  background-color: #1e1e1e !important;
+  color: #f5f5f5 !important;
+  border-color: #333 !important;
+}
+
+/* Input fields */
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+  background-color: #2b2b2b !important;
+  color: #ffffff !important;
+  border: 1px solid #444 !important;
+}
+
+/* Sidebar */
+.dark-mode #subjectSidebar {
+  background-color: #181818 !important;
+  color: #ffffff !important;
+  border-right: 1px solid #333 !important;
+}
+
+/* Navigation bar */
+.dark-mode .navbar,
+.dark-mode nav {
+  background-color: #1b1b1b !important;
+  border-bottom: 1px solid #333 !important;
+}
+
+/* Buttons */
+.dark-mode button,
+.dark-mode .btn {
+  color: #ffffff !important;
+}
+
+/* Fix your 3 priority badges to be readable */
+.dark-mode .badge-high {
+  background: #ff8787 !important;
+  color: #000 !important;
+}
+.dark-mode .badge-medium {
+  background: #ffe46e !important;
+  color: #000 !important;
+}
+.dark-mode .badge-low {
+  background: #7be89a !important;
+  color: #000 !important;
+}
+
+/* Task cards contrast */
+.dark-mode .task-card.completed {
+  background-color: #1f2a1f !important;
+}
+
+.dark-mode .task-card.pending {
+  background-color: #2a1f1f !important;
+}
+
+/* XP bar */
+.dark-mode #xpBar {
+  background-color: #333 !important;
+}
+.dark-mode #xpBar .progress-bar {
+  background-color: #6ee7ff !important;
+}
+
+/* Horizontal scroll group cards on mobile */
+.dark-mode .subject-card {
+  background-color: #222 !important;
+  color: #fff !important;
+}
+
+/* Icons */
+.dark-mode i {
+  color: #fff !important;
+}
+
+/* Clear Recent Tasks button / Multi-select */
+.dark-mode .multi-delete-btn {
+  background-color: #bb4444 !important;
+  color: #fff !important;
+}
+
+/* Level text */
+.dark-mode #levelDisplay,
+.dark-mode #xpDisplay {
+  color: #eee !important;
+}
+
+
     :root{
       --mint:#D8F4C4;
       --peach:#FFEFE6;
@@ -25,30 +149,49 @@
       --accent:#FFD7EC;
       --shadow: 0 6px 18px rgba(14,18,28,0.08);
       --glass: rgba(255,255,255,0.6);
+
+      /* dark mode vars */
+      --bg: linear-gradient(180deg, #FFFDF9 0%, #F6FFF8 100%);
+      --header-bg: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+      --card-bg: linear-gradient(180deg, var(--peach), #FFF6F1);
+      --text-color: #1f2e2b;
+      --muted: #5f7a67;
+      --group-bg: linear-gradient(180deg, var(--mint), rgba(201,244,196,0.8));
+    }
+
+    /* DARK MODE */
+    .dark-mode{
+      --bg: linear-gradient(180deg, #0f1114 0%, #152026 100%);
+      --header-bg: linear-gradient(90deg, rgba(10,10,10,0.85), rgba(20,20,20,0.9));
+      --card-bg: linear-gradient(180deg, #1b2a20, #12231b);
+      --text-color: #e6efe7;
+      --muted: #9fb9a5;
+      --group-bg: linear-gradient(180deg,#0f2a1a,#143423);
+      --shadow: 0 6px 16px rgba(0,0,0,0.5);
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(180deg, #FFFDF9 0%, #F6FFF8 100%);
+      background: var(--bg);
       display:flex;
       min-height:100vh;
       flex-direction:column;
       -webkit-font-smoothing:antialiased;
-      color:#1f2e2b;
+      color:var(--text-color);
     }
 
     /* HEADER */
     .top-header{
       width:100%;
-      background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+      background: var(--header-bg);
       padding:10px 20px;
       display:flex;
       gap:12px;
       justify-content:space-between;
       align-items:center;
-      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+      box-shadow:var(--shadow);
       position:sticky;
       top:0;
       z-index:1000;
@@ -61,7 +204,7 @@
       margin:0;
       font-weight:700;
       font-size:20px;
-      color:#1b422f;
+      color:var(--text-color);
       letter-spacing:0.2px;
     }
     .about-btn{
@@ -71,7 +214,7 @@
       border:none;
       font-weight:600;
       cursor:pointer;
-      box-shadow:0 6px 18px rgba(0,0,0,0.06);
+      box-shadow:var(--shadow);
     }
 
     /* LAYOUT */
@@ -85,7 +228,7 @@
     /* SIDEBAR */
     .sidebar{
       width:320px;
-      background: linear-gradient(180deg, var(--mint), rgba(201,244,196,0.8));
+      background: var(--group-bg);
       padding:18px;
       height:calc(100vh - 78px);
       border-radius:0 24px 24px 0;
@@ -105,7 +248,7 @@
     }
 
     .group-card{
-      background:white;
+      background:var(--card-bg);
       border-radius:14px;
       padding:10px;
       margin-bottom:10px;
@@ -129,7 +272,7 @@
       font-size:20px;background:#FFF5D6;box-shadow:0 4px 8px rgba(0,0,0,0.06);
     }
 
-    .group-name{ font-weight:600; color:#222; font-size:15px; }
+    .group-name{ font-weight:600; color:var(--text-color); font-size:15px; }
 
     .add-subject-btn{
       position:absolute; left:16px; bottom:16px;
@@ -149,10 +292,10 @@
     }
 
     h1{ font-size:22px; margin:0; font-weight:700; display:flex; gap:10px; align-items:center; }
-    .subtext { color:#5f7a67; font-weight:500; }
+    .subtext { color:var(--muted); font-weight:500; }
 
     .card-kawaii{
-      background: linear-gradient(180deg, var(--peach), #FFF6F1);
+      background: var(--card-bg);
       padding:16px;
       border-radius:14px;
       box-shadow: var(--shadow);
@@ -172,14 +315,14 @@
       border:none;
       padding:8px 12px;
       font-weight:700;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+      box-shadow: var(--shadow);
     }
 
     .btn-kawaii-green{ background: linear-gradient(180deg,#C9F4C4,#AEEFAD); color:#1a3a2b; }
     .btn-kawaii-red{ background: linear-gradient(180deg,#FFB8C6,#FF9FB0); color:#4a0a1a; }
 
     .task-card{
-      background:white; border-radius:12px; padding:12px; box-shadow:0 6px 12px rgba(0,0,0,0.06);
+      background:var(--card-bg); border-radius:12px; padding:12px; box-shadow:var(--shadow);
     }
     .task-card.completed{
       background:#D7F8CE; text-decoration:line-through; opacity:.95;
@@ -196,7 +339,7 @@
 
     .level-badge{
       background:linear-gradient(180deg,#fff,#f3fff3);
-      padding:8px 12px; border-radius:12px; font-weight:700; box-shadow:0 6px 14px rgba(0,0,0,0.06);
+      padding:8px 12px; border-radius:12px; font-weight:700; box-shadow:var(--shadow);
     }
 
     /* mobile toolbar that appears when sidebar is collapsed */
@@ -226,7 +369,15 @@
       .group-card{ min-width:140px; flex:0 0 auto; }
 
       .mobile-toolbar{ display:flex; }
-      .xp-wrap{ display:none; }
+      /* NEW: show xp-wrap on mobile and make it compact */
+      .xp-wrap{
+        display:flex;
+        gap:8px;
+        align-items:center;
+        min-width:0;
+      }
+      .xp-bar{ width:120px; flex:0 0 auto; }
+      .level-badge{ padding:6px 8px; font-size:13px; }
     }
 
     /* very small screens */
@@ -234,7 +385,55 @@
       .group-card{ min-width:120px; }
       h1{ font-size:18px; }
       .brand img{ width:36px; height:36px; }
+      .xp-bar{ width:90px; }
     }
+
+    /* small helpers for recent-toolbar */
+    .recent-toolbar{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      margin-bottom:8px;
+    }
+    .recent-toolbar .btn{ font-size:13px; padding:6px 10px; }
+
+/* --------------------------
+   DARK MODE BUTTONS & LEVEL FIX
+---------------------------*/
+
+/* Main buttons */
+.dark-mode #addGroupBtn,
+.dark-mode #addTaskBtn,
+.dark-mode #deleteSelectedBtn,
+.dark-mode #clearRecentBtn,
+.dark-mode #openAboutBtn,
+.dark-mode #darkModeToggle,
+.dark-mode .btn-kawaii,
+.dark-mode .btn-kawaii-green,
+.dark-mode .btn-kawaii-red,
+.dark-mode .about-btn {
+    background: linear-gradient(180deg,#444,#222) !important; /* overrides gradient */
+    color: #fff !important;
+    border: 1px solid #555 !important;
+}
+
+/* Level display / XP badge */
+.dark-mode #levelDisplay,
+.dark-mode #xpDisplay,
+.dark-mode .level-badge {
+    color: #fff !important;
+    background: linear-gradient(180deg,#333,#222) !important;
+    border: 1px solid #555 !important;
+}
+
+/* Add Group Button (floating) in Dark Mode */
+.dark-mode .add-subject-btn {
+    background: linear-gradient(180deg,#444,#222) !important;
+    color: #fff !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5) !important;
+}
+
+
   </style>
 </head>
 
@@ -253,6 +452,10 @@
     <div class="mobile-toolbar">
       <button id="toggleSidebarBtn" class="btn btn-kawaii btn-sm" title="Groups"><i class="fa fa-folder-open"></i></button>
     </div>
+
+    <!-- NEW: Dark mode toggle -->
+    <button id="darkModeBtn" class="btn btn-kawaii btn-sm" title="Toggle dark mode"><i id="darkModeIcon" class="fa fa-moon"></i></button>
+
     <button class="about-btn" id="openAboutBtn"><i class="fa fa-info-circle"></i> About</button>
   </div>
 </div>
@@ -318,6 +521,13 @@
           <textarea id="description" class="form-control" rows="2"></textarea>
         </div>
 
+        <!-- NEW: Deadline input (deadline is optional) -->
+        <div class="mt-2">
+          <label class="form-label small">Deadline</label>
+          <input type="datetime-local" id="deadline" class="form-control" />
+          <small class="text-muted">Optional — latest time to complete the task.</small>
+        </div>
+
         <div class="mt-3 d-flex gap-2">
           <button class="btn btn-kawaii w-100" type="submit"><i class="fa fa-circle-plus"></i> Add Task</button>
           <button class="btn btn-outline-secondary" id="clearForm" type="button"><i class="fa fa-eraser"></i> Clear</button>
@@ -328,7 +538,11 @@
     <h4 class="mt-4"><i class="fa fa-bolt"></i> Active Tasks</h4>
     <div id="activeTasks" class="row g-3"></div>
 
-    <h4 class="mt-4"><i class="fa fa-clock-rotate-left"></i> Recent Tasks</h4>
+    <h4 class="mt-4 d-flex align-items-center justify-content-between">
+      <span><i class="fa fa-clock-rotate-left"></i> Recent Tasks</span>
+      <!-- NEW: recent tasks toolbar -->
+      <div id="recentToolbarPlaceholder"></div>
+    </h4>
     <div id="recentTasks" class="row g-3"></div>
   </div>
 
@@ -669,6 +883,24 @@
     renderTasks();
   });
 
+  // NEW: after the original submit handler, attach the deadline to the newly created task (if provided)
+  taskForm.addEventListener('submit', (e)=>{
+    // run after the existing handler using setTimeout(0)
+    setTimeout(()=>{
+      if(tasks.length === 0) return;
+      const last = tasks[tasks.length - 1];
+      // only attach if subject matches and no deadline yet (to avoid overwriting)
+      const deadlineInput = document.getElementById('deadline');
+      if(deadlineInput && deadlineInput.value){
+        // store ISO string
+        last.deadline = new Date(deadlineInput.value).toISOString();
+        last.deadlineMissed = false;
+        saveAll();
+        renderTasks();
+      }
+    }, 0);
+  });
+
   document.getElementById('clearForm').addEventListener('click', ()=>taskForm.reset());
 
   // completeTask: marks completed, increments streak and also grants 1 XP per completed task
@@ -863,6 +1095,184 @@
       }
     }
   });
+
+  /* ---------------------- NEW FEATURES (no changes to existing functions) ---------------------- */
+
+  // NEW: Dark mode toggle (saves state)
+  const darkModeBtn = document.getElementById('darkModeBtn');
+  const darkModeIcon = document.getElementById('darkModeIcon');
+  function applyDarkMode(enabled){
+    if(enabled){
+      document.body.classList.add('dark-mode');
+      darkModeIcon.classList.remove('fa-moon'); darkModeIcon.classList.add('fa-sun');
+    } else {
+      document.body.classList.remove('dark-mode');
+      darkModeIcon.classList.remove('fa-sun'); darkModeIcon.classList.add('fa-moon');
+    }
+    localStorage.setItem('taxolotl_dark', enabled ? '1' : '0');
+  }
+  // initialize dark mode from storage
+  applyDarkMode(localStorage.getItem('taxolotl_dark') === '1');
+  darkModeBtn.addEventListener('click', ()=> applyDarkMode(!(document.body.classList.contains('dark-mode'))));
+
+  // NEW: Recent tasks toolbar (select multi, delete selected, clear recent)
+  const recentToolbarPlaceholder = document.getElementById('recentToolbarPlaceholder');
+
+  function createRecentToolbar(){
+    recentToolbarPlaceholder.innerHTML = `
+      <div class="recent-toolbar" id="recentToolbar">
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="checkbox" id="recentSelectAll" />
+          <label for="recentSelectAll" class="mb-0 small text-muted">Select all</label>
+        </div>
+        <button class="btn btn-kawaii btn-sm" id="deleteSelectedBtn"><i class="fa fa-trash"></i> Delete selected</button>
+        <button class="btn btn-kawaii-red btn-sm" id="clearRecentBtn"><i class="fa fa-broom"></i> Clear Recent</button>
+      </div>
+    `;
+
+    const selectAll = document.getElementById('recentSelectAll');
+    const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
+    const clearRecentBtn = document.getElementById('clearRecentBtn');
+
+    selectAll.addEventListener('change', ()=>{
+      const checked = selectAll.checked;
+      document.querySelectorAll('#recentTasks input.recent-select').forEach(cb=> cb.checked = checked);
+    });
+
+    deleteSelectedBtn.addEventListener('click', ()=>{
+      const selectedIds = Array.from(document.querySelectorAll('#recentTasks input.recent-select:checked'))
+        .map(cb=> cb.dataset.id);
+      if(selectedIds.length === 0){ showAlert('No recent tasks selected.'); return; }
+      showConfirm(`Delete ${selectedIds.length} selected recent task(s)?`, ()=>{
+        tasks = tasks.filter(t => !selectedIds.includes(String(t.id)));
+        saveAll();
+        renderTasks();
+      });
+    });
+
+    clearRecentBtn.addEventListener('click', ()=>{
+      showConfirm('Clear all recent (completed) tasks for this group?', ()=>{
+        tasks = tasks.filter(t=> !(t.subjectId === selectedSubjectId && t.status === 'Completed'));
+        saveAll();
+        renderTasks();
+      });
+    });
+  }
+
+  // NEW: MutationObserver that enhances recent task cards (adds checkbox and deadline display)
+  const recentObserver = new MutationObserver((mutationsList)=>{
+    // whenever recentTasks children change, enhance them
+    enhanceRecentTasks();
+  });
+  recentObserver.observe(recentTasks, { childList: true, subtree: true });
+
+  // enhanceRecentTasks: inject a checkbox and deadline info into each recent task card
+  function enhanceRecentTasks(){
+    // create toolbar if missing
+    if(!document.getElementById('recentToolbar')) createRecentToolbar();
+
+    // go through completed tasks for current subject and match DOM nodes
+    const completedTasks = tasks.filter(t=> t.subjectId===selectedSubjectId && t.status === 'Completed');
+    // For each completed task, find its DOM card by locating a button with onclick="reuseTask(ID)" or delete/edit/pen
+    completedTasks.forEach(task=>{
+      // attempt to find reuse button for this id
+      const reuseBtn = document.querySelector(`#recentTasks [onclick="reuseTask(${task.id})"]`);
+      const editBtn = document.querySelector(`#recentTasks [onclick="editTask(${task.id})"]`);
+      const deleteBtn = document.querySelector(`#recentTasks [onclick="deleteTask(${task.id})"]`);
+      const refBtn = reuseBtn || editBtn || deleteBtn;
+      if(!refBtn) return;
+      const card = refBtn.closest('.task-card');
+      if(!card) return;
+
+      // avoid duplicating if already enhanced
+      if(card.querySelector('.recent-checkbox')) return;
+
+      // insert checkbox at top-left of card
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.className = 'recent-select recent-checkbox';
+      cb.dataset.id = String(task.id);
+      cb.style.marginRight = '8px';
+
+      // put checkbox in the header area (before the task title)
+      const header = card.querySelector('h6');
+      if(header){
+        header.style.display = 'flex';
+        header.style.alignItems = 'center';
+        const wrapper = document.createElement('span');
+        wrapper.style.display = 'inline-flex';
+        wrapper.style.alignItems = 'center';
+        wrapper.appendChild(cb);
+        // move existing title inside wrapper
+        const titleText = document.createElement('span');
+        titleText.innerHTML = header.innerHTML;
+        wrapper.appendChild(titleText);
+        header.innerHTML = '';
+        header.appendChild(wrapper);
+      }
+
+      // show deadline if present
+      if(task.deadline && !card.querySelector('.deadline-tag')){
+        const d = document.createElement('div');
+        d.className = 'deadline-tag text-muted small mt-2';
+        const dt = new Date(task.deadline);
+        if(!isNaN(dt)) d.textContent = `Deadline: ${dt.toLocaleString()}`;
+        else d.textContent = `Deadline: ${task.deadline}`;
+        card.querySelector('.mt-3').insertAdjacentElement('beforebegin', d);
+      }
+    });
+  }
+
+  // NEW: Deadline checker every 30 seconds — penalize missed deadlines once
+  function deadlineCheck(){
+    const now = new Date();
+    let deducted = 0;
+    tasks.forEach(t=>{
+      if(t.deadline && t.status === 'Pending' && !t.deadlineMissed){
+        const dt = new Date(t.deadline);
+        if(!isNaN(dt) && dt < now){
+          // apply penalty based on priority
+          let penalty = 0;
+          if(t.priority === 'Low') penalty = 1;
+          else if(t.priority === 'Medium') penalty = 2;
+          else if(t.priority === 'High') penalty = 3;
+          xp = Math.max(0, xp - penalty);
+          t.deadlineMissed = true;
+          deducted += penalty;
+        }
+      }
+    });
+    if(deducted > 0){
+      saveAll();
+      updateXPUI();
+      showAlert(`Some deadlines were missed. You lost ${deducted} XP total.`);
+      renderTasks();
+    }
+  }
+  // run immediately once and then every 30 seconds
+  setTimeout(deadlineCheck, 2000);
+  setInterval(deadlineCheck, 30000);
+
+  // NEW: expose a small utility to find a task element by id (not used elsewhere, but kept for future)
+  function findTaskCardElementById(id, completedOnly = false){
+    // try reuseTask, editTask, deleteTask selectors
+    const selPrefixes = completedOnly ? ['reuseTask'] : ['completeTask','reuseTask','editTask','deleteTask'];
+    for(const fn of selPrefixes){
+      const el = document.querySelector(`#activeTasks [onclick="${fn}(${id})"], #recentTasks [onclick="${fn}(${id})"]`);
+      if(el) return el.closest('.task-card');
+    }
+    return null;
+  }
+
+  // NEW: make sure toolbar renders right away
+  createRecentToolbar();
+  enhanceRecentTasks();
+
+  // NEW: Dark mode should also adjust xp bar colors on toggle (already handled by CSS vars)
+  // nothing else to do
+
+  /* -------------------------------------------------------------------------------------------- */
+
 </script>
 
 <style>
